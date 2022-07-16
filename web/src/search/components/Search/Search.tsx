@@ -1,42 +1,35 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import PetCategorySearch from '../PetCategorySearch/PetCategorySearch';
 import LocationInput from 'src/common/components/location/LocationInput';
 
-export default function () {
-  const [category, setCategory] = useState('');
-  const [search, setSearch] = useState('');
+export default function Search(): React.ReactElement {
+  const navigate = useNavigate();
+
+  const [category, setCategory] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
   const [categorySelectorOpened, setCategorySelectorOpened] = useState(false);
 
-  function handleSearchChange(newSearch) {
-    setSearch(newSearch);
-  }
+  const handleSearchChange = (newSearch: string) => setSearch(newSearch);
+  const handleCategoryChange = (newCategory: string) => setCategory(newCategory);
 
-  function handleCategoryChange(newCategory) {
-    setCategory(newCategory);
-  }
-
-  function handleSearchFocus() {
+  const handleSearchFocus = () => {
     if (!categorySelectorOpened) {
       setCategorySelectorOpened(true);
     }
   }
 
-  function handleSearchBlur() {
+  const handleSearchBlur = () => {
     if (categorySelectorOpened) {
       setCategorySelectorOpened(false);
     }
   }
 
-  const navigate = useNavigate();
-
-  function toPet() {
-    navigate('/pet');
-  }
+  const toPet = () => navigate('/pet');
 
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{ display: 'flex' }}>
       <div>
         <PetCategorySearch
           search={search}

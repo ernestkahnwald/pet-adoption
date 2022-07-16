@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from 'src/search/components/Search';
 
-export default function Routing () {
+export default function Routing(): ReactElement {
   return (
     <BrowserRouter>
       <Routes>
