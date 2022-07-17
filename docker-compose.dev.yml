@@ -1,0 +1,48 @@
+version: "3.8"
+
+x-debuggable: &debuggable
+  stdin_open: true
+  tty: true
+
+services:
+  backend:
+    build: backend
+    command: "sh ./scripts/run-dev.sh"
+    # restart: on-failure
+    <<: *debuggable
+    env_file:
+      - "backend/.env"
+    volumes:
+      - "./backend:/app"
+    ports:
+      - "8080:8080"
+    networks:
+      - db-net
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
+    restart: "no"
+    environment:
+      POSTGRES_USER: peta
+      POSTGRES_PASSWORD: peta
+      PG_DATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - "pa-main-db-data:/var/lib/postgresql/data"
+      - "./conf/db/postgresql.conf:/etc/postgresql/postgresql.conf"
+    healthcheck:
+      test: pg_isready -U $${POSTGRES_USER} -h 127.0.0.1
+      interval: 10s
+    ports:
+      - "5433:5432"
+    networks:
+      - db-net
+
+networks:
+  db-net:
+
+volumes:
+  pa-main-db-data:
+
