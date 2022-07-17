@@ -1,22 +1,23 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 
 import PetCategorySelector from '../PetCategorySelector/PetCategorySelector';
 import { withDisplayName } from 'src/common/components/utils/wrappers';
+import { InputEvent } from 'src/common/components/shortcuts';
 
 interface Props {
   search: string;
   categorySelectorOpened: boolean;
   category: string;
-  handleSearchChange: Function;
-  handleSearchFocus: Function;
-  handleSearchBlur: Function;
-  handleCategoryChange: (category: string) => void;
+
+  handleSearchChange: (value: string) => void;
+  handleSearchFocus: (e: unknown) => void;
+  handleCategoryChange: (value: string) => void;
 }
 
 const PetCategorySearch: React.FC<Props> = (props) => {
-  const handleSearchChange = (e: any) => props.handleSearchChange(e.target.value);
-  const handleSearchFocus = props.handleSearchFocus as MouseEventHandler;
-  const handleCategoryChange = (category: string) => props.handleCategoryChange(category);
+  const handleSearchChange = (e: InputEvent) => props.handleSearchChange(e.currentTarget.value);
+  const handleSearchFocus = props.handleSearchFocus;
+  const handleCategoryChange = (newCategory: string) => props.handleCategoryChange(newCategory);
 
   return (
     <div>

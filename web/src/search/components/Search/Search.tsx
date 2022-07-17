@@ -50,4 +50,4 @@ export default function Search(): React.ReactElement {
       <button onClick={toPet}>To pet</button>
     </div>
   );
-};
+}
